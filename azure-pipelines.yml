@@ -17,6 +17,32 @@ steps:
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
-    publishJUnitResults: false
+    publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+    
+- task: ExecBenchmarks@0
+  displayName: 'Exec benchmarks'
+# TODO: remove Rocker Thymeleaf
+- script: |
+    java -jar target/benchmarks.jar Rocker Thymeleaf -rff results.csv -rf csv
+    cat results.csv
+
+# TODO: public results.csv and png
+# Publish Cobertura or JaCoCo code coverage results from a build
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'JaCoCo' 
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/site/jacoco/jacoco.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/**/site/jacoco'
+    failIfCoverageEmpty: true
+
+- task: CopyFiles@2
+  inputs:
+    contents: '**/*.jar'
+    targetFolder: '$(build.artifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    artifactName: 'jar'
+    pathToPublish: '$(build.artifactStagingDirectory)'
