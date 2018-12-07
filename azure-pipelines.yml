@@ -1,11 +1,3 @@
-# Maven
-# Build your Java project and run tests with Apache Maven.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
-trigger:
-- update-frameworks
-
 pool:
   vmImage: 'Ubuntu-16.04'
 
@@ -29,13 +21,12 @@ steps:
     cat results.csv
   displayName: 'Exec benchmarks'
   
-- script: 'sudo apt-get install -y gnuplot'
+- script: sudo apt-get install -y gnuplot
   displayName: 'Install gnuplot'
   
-- script: 'gnuplot benchmark.plot'
+- script: gnuplot benchmark.plot
   displayName: 'Generate results.png'
   
-# TODO: public results.csv and png
 - task: CopyFiles@2
   inputs:
     contents: |
