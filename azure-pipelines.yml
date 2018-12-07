@@ -20,14 +20,12 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
-    
-- task: ExecBenchmarks@0
-  displayName: 'Exec benchmarks'
+
 # TODO: remove Rocker Thymeleaf
 - script: |
     java -jar target/benchmarks.jar Rocker Thymeleaf -rff results.csv -rf csv
     cat results.csv
-
+  displayName: 'Exec benchmarks'
 # TODO: public results.csv and png
 # Publish Cobertura or JaCoCo code coverage results from a build
 - task: PublishCodeCoverageResults@1
