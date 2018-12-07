@@ -27,10 +27,14 @@ steps:
     rm results.png
     java -jar target/benchmarks.jar Rocker Thymeleaf -rff results.csv -rf csv
     cat results.csv
-    sudo apt-get install -y gnuplot
-    gnuplot benchmark.plot
-    
   displayName: 'Exec benchmarks'
+  
+ - script: sudo apt-get install -y gnuplot
+  displayName: 'Install gnuplot'
+  
+ - script: gnuplot benchmark.plot
+  displayName: 'Generate results.png'
+      
   
 # TODO: public results.csv and png
 
