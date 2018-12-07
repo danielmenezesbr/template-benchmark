@@ -25,22 +25,20 @@ steps:
 - script: |
     java -jar target/benchmarks.jar Rocker Thymeleaf -rff results.csv -rf csv
     cat results.csv
+    gnuplot benchmark.plot
   displayName: 'Exec benchmarks'
+  
 # TODO: public results.csv and png
-# Publish Cobertura or JaCoCo code coverage results from a build
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'JaCoCo' 
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/site/jacoco/jacoco.xml'
-    reportDirectory: '$(System.DefaultWorkingDirectory)/**/site/jacoco'
-    failIfCoverageEmpty: true
 
 - task: CopyFiles@2
   inputs:
-    contents: '**/*.jar'
+    contents: |
+       **/*.jar
+       results.csv
+       results.png
     targetFolder: '$(build.artifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
   inputs:
-    artifactName: 'jar'
+    artifactName: 'arquivos'
     pathToPublish: '$(build.artifactStagingDirectory)'
