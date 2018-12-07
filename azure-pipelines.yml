@@ -29,10 +29,10 @@ steps:
     cat results.csv
   displayName: 'Exec benchmarks'
   
-- script: sudo apt-get install -y gnuplot
+- script: 'sudo apt-get install -y gnuplot'
   displayName: 'Install gnuplot'
   
-- script: gnuplot benchmark.plot
+- script: 'gnuplot benchmark.plot'
   displayName: 'Generate results.png'
   
 # TODO: public results.csv and png
