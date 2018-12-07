@@ -23,10 +23,12 @@ steps:
 
 # TODO: remove Rocker Thymeleaf
 - script: |
-    sudo apt-get install -y gnuplot
-    gnuplot benchmark.plot
+    rm results.csv
+    rm results.png
     java -jar target/benchmarks.jar Rocker Thymeleaf -rff results.csv -rf csv
     cat results.csv
+    sudo apt-get install -y gnuplot
+    gnuplot benchmark.plot
     
   displayName: 'Exec benchmarks'
   
