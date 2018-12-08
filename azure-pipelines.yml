@@ -15,11 +15,11 @@ steps:
 
 # TODO: remove Rocker Thymeleaf
 - script: |
-    rm results.csv
-    rm results.png
+    rm results.*
     java -jar target/benchmarks.jar Rocker Thymeleaf -rff results.csv -rf csv
     cat results.csv
     sed -i -E 's/com\.mitchellbosecke\.benchmark\.(\w+)\.benchmark/\1/g' results.csv
+    python generate-results-with-version.py
     cat results.csv
   displayName: 'Exec benchmarks'
   
